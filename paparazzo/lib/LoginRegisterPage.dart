@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class LoginRegisterPage extends StatefulWidget 
+class LoginRegisterPage extends StatefulWidget
 {
   State<StatefulWidget> createState()
   {
     return _LoginRegisterState();
   }
-  
+
 }
 
 enum FormType
@@ -15,8 +15,10 @@ enum FormType
   register
 }
 
-class _LoginRegisterState extends State<LoginRegisterPage> 
+class _LoginRegisterState extends State<LoginRegisterPage> with SingleTickerProviderStateMixin
 {
+
+
   final formKey=new GlobalKey<FormState>();
   FormType _formType=FormType.login;
   String _email = "";
@@ -25,25 +27,25 @@ class _LoginRegisterState extends State<LoginRegisterPage>
   //methods
   bool validateAndSave()
   {
-      final form=formKey.currentState;
-      if(form.validate())
-        {
-          form.save();
-          return true;
-        }
-      else
-        {
-          return false;
-        }
+    final form=formKey.currentState;
+    if(form.validate())
+    {
+      form.save();
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
 
   void moveToRegister()
   {
-      formKey.currentState.reset();
+    formKey.currentState.reset();
 
-      setState(() {
-        _formType=FormType.register;
-      });
+    setState(() {
+      _formType=FormType.register;
+    });
   }
 
   void moveToLogin()
@@ -57,7 +59,7 @@ class _LoginRegisterState extends State<LoginRegisterPage>
 
   //Design
   @override
-  Widget build(BuildContext context) 
+  Widget build(BuildContext context)
   {
     return new Scaffold(
       appBar: new AppBar(
@@ -79,43 +81,43 @@ class _LoginRegisterState extends State<LoginRegisterPage>
   }
   List<Widget> createInputs()
   {
-    return 
-        [
-          SizedBox(height: 10.0,),
-          logo(),
-          SizedBox(height: 20.0,),
+    return
+      [
+        SizedBox(height: 10.0,),
+        logo(),
+        SizedBox(height: 20.0,),
 
-          new TextFormField(
-            decoration: new InputDecoration(labelText: 'Email'),
-            validator: (value)
-            {
-              return value.isEmpty?'Email is required':null;
-            },
-            onSaved: (value){
-              return _email=value;
-            },
-          ),
-          SizedBox(height: 10.0,),
-          new TextFormField(
+        new TextFormField(
+          decoration: new InputDecoration(labelText: 'Email'),
+          validator: (value)
+          {
+            return value.isEmpty?'Email is required':null;
+          },
+          onSaved: (value){
+            return _email=value;
+          },
+        ),
+        SizedBox(height: 10.0,),
+        new TextFormField(
 
 
-            decoration: new InputDecoration(labelText: 'Password'),
-            obscureText: true;,
-            validator: (value)
-            {
-              return value.isEmpty?'Password is required':null;
-            },
-            onSaved: (value){
-              return _password=value;
-            },
-          ),
-          SizedBox(height: 20.0,),
-        ];
+          decoration: new InputDecoration(labelText: 'Password'),
+          obscureText: true,
+          validator: (value)
+          {
+            return value.isEmpty?'Password is required':null;
+          },
+          onSaved: (value){
+            return _password=value;
+          },
+        ),
+        SizedBox(height: 20.0,),
+      ];
   }
   Widget logo()
   {
     return new Hero
-    (
+      (
       tag: 'hero',
       child: new CircleAvatar(
         backgroundColor: Colors.transparent,
@@ -128,46 +130,46 @@ class _LoginRegisterState extends State<LoginRegisterPage>
   List<Widget> createButton()
   {
     if(_formType== FormType.login)
-      {
-        return[
-          new RaisedButton
-            (
-            child: new Text('Login',style: new TextStyle(fontSize: 20.0),),
-            textColor: Colors.white,
-            color: Colors.deepPurple,
-            onPressed: validateAndSave,
-          ),
+    {
+      return[
+        new RaisedButton
+          (
+          child: new Text('Login',style: new TextStyle(fontSize: 20.0),),
+          textColor: Colors.white,
+          color: Colors.deepPurple,
+          onPressed: validateAndSave,
+        ),
 
-          new FlatButton
-            (
-            child: new Text('Create Account?',style: new TextStyle(fontSize: 14.0),),
-            textColor: Colors.red,
+        new FlatButton
+          (
+          child: new Text('Create Account?',style: new TextStyle(fontSize: 14.0),),
+          textColor: Colors.red,
 
-            onPressed: moveToRegister,
-          )
+          onPressed: moveToRegister,
+        )
 
-        ];
-      }
+      ];
+    }
     else
-      {
-        return[
-          new RaisedButton
-            (
-            child: new Text('Create Account',style: new TextStyle(fontSize: 20.0),),
-            textColor: Colors.white,
-            color: Colors.deepPurple,
-            onPressed: validateAndSave,
-          ),
+    {
+      return[
+        new RaisedButton
+          (
+          child: new Text('Create Account',style: new TextStyle(fontSize: 20.0),),
+          textColor: Colors.white,
+          color: Colors.deepPurple,
+          onPressed: validateAndSave,
+        ),
 
-          new FlatButton
-            (
-            child: new Text('Already have an account? Login',style: new TextStyle(fontSize: 14.0),),
-            textColor: Colors.red,
+        new FlatButton
+          (
+          child: new Text('Already have an account? Login',style: new TextStyle(fontSize: 14.0),),
+          textColor: Colors.red,
 
-            onPressed: moveToLogin,
-          )
+          onPressed: moveToLogin,
+        )
 
-        ];
-      }
+      ];
+    }
   }
 }

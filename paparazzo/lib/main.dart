@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paparazzo/LoginRegisterPage.dart';
+import 'package:paparazzo/HomePage.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
+      //home: HomePage(),
       home: LoginRegisterPage(),
     );
   }
