@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:paparazzo/Authentication.dart';
 
 class LoginRegisterPage extends StatefulWidget
 {
+  LoginRegisterPage({
+    this.auth,
+    this.onSignedIn, onSignedOut,
+});
+  final AuthImplementation auth;
+  final VoidCallback onSignedIn;
+
   State<StatefulWidget> createState()
   {
     return _LoginRegisterState();
@@ -37,6 +45,30 @@ class _LoginRegisterState extends State<LoginRegisterPage> with SingleTickerProv
     {
       return false;
     }
+  }
+
+  void ValidateAndSubmit() async
+  {
+    if(validateAndSave())
+      {
+        try{
+           if(_formType==FormType.login)
+             {
+               String userId=await widget.auth.SignIn(_email, _password);
+               print("login userId="+userId);
+             }
+            else
+              {
+                String userId=await widget.auth.SignUp(_email, _password);
+                print("Register userId="+userId);
+              }
+            widget.onSignedIn();
+        }
+        catch(e)
+        {
+          print("Error:"+e.toString());
+        }
+      }
   }
 
   void moveToRegister()
@@ -137,7 +169,7 @@ class _LoginRegisterState extends State<LoginRegisterPage> with SingleTickerProv
           child: new Text('Login',style: new TextStyle(fontSize: 20.0),),
           textColor: Colors.white,
           color: Colors.deepPurple,
-          onPressed: validateAndSave,
+          onPressed: ValidateAndSubmit,
         ),
 
         new FlatButton
@@ -158,7 +190,7 @@ class _LoginRegisterState extends State<LoginRegisterPage> with SingleTickerProv
           child: new Text('Create Account',style: new TextStyle(fontSize: 20.0),),
           textColor: Colors.white,
           color: Colors.deepPurple,
-          onPressed: validateAndSave,
+          onPressed: ValidateAndSubmit,
         ),
 
         new FlatButton

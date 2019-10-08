@@ -1,14 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:paparazzo/Authentication.dart';
+import 'Mapping.dart';
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
+class HomePage extends StatefulWidget
+{
+  HomePage
+      ({
+          this.auth,
+          this.onSignedOut,
+      });
+  final AuthImplementation auth;
+  final VoidCallback onSignedOut;
+
+
+
+  State<StatefulWidget> createState()
+  {
+    return _HomePageState();
+  }
 }
 
 class _HomePageState extends State<HomePage> {
 
-  void _logoutUser()
+  void _logoutUser()async
   {
+    try
+    {
+      await widget.auth.signOut();
+      widget.onSignedOut();
+    }catch(e)
+    {
+      print("Error:"+e.toString());
+    }
 
   }
   @override
